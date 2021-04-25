@@ -23,10 +23,15 @@ type (
 
 	Option func(*Options) error
 
+	Transporter struct {
+		KafkaTransporter chan []byte
+	}
+
 	Service struct {
 		Options
-		Sigchan chan os.Signal
-		DoneCh  chan struct{}
+		Sigchan     chan os.Signal
+		DoneCh      chan struct{}
+		Transporter *Transporter
 	}
 )
 
@@ -35,9 +40,12 @@ const (
 )
 
 func (o *Options) connect() (s *Service, err error) {
-	return &Service{
-		Options: *o,
-	}, nil
+	s = &Service{
+		Options:     *o,
+		Transporter: &Transporter{},
+	}
+	s.Transporter.KafkaTransporter = make(chan []byte)
+	return
 }
 
 func New(name, version string, options ...Option) (s *Service, err error) {
