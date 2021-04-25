@@ -3,7 +3,10 @@ package service
 import (
 	"GOnsumer/internal/service/kafka"
 	"GOnsumer/internal/service/logger"
+	"GOnsumer/internal/service/web"
 	"os"
+
+	"github.com/gofiber/fiber/v2"
 
 	"github.com/Shopify/sarama"
 	"github.com/rs/zerolog"
@@ -33,6 +36,16 @@ func Logger() Option {
 		o.Logger = &logger.LoggerService{
 			Logger: zerolog.New(zerolog.ConsoleWriter{Out: os.Stderr}).With().Timestamp().Logger(),
 		}
+		return nil
+	}
+}
+
+func Web(routes ...map[string]func(ctx *fiber.Ctx) error) Option {
+	return func(o *Options) (err error) {
+		o.Web = &web.WebService{
+			App: fiber.New(),
+		}
+		o.Web.Routes = routes
 		return nil
 	}
 }

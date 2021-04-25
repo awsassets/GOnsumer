@@ -3,6 +3,7 @@ package service
 import (
 	"GOnsumer/internal/service/kafka"
 	"GOnsumer/internal/service/logger"
+	"GOnsumer/internal/service/web"
 
 	"os"
 	"strings"
@@ -16,6 +17,7 @@ type (
 		Version string
 		Kafka   *kafka.KafkaService
 		Logger  *logger.LoggerService
+		Web     *web.WebService
 		Cfg     *Config
 	}
 
