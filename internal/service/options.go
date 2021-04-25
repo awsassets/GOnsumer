@@ -1,9 +1,12 @@
 package service
 
 import (
-	"GOnsumer/service/kafka"
+	"GOnsumer/internal/service/kafka"
+	"GOnsumer/internal/service/logger"
+	"os"
 
 	"github.com/Shopify/sarama"
+	"github.com/rs/zerolog"
 )
 
 func Kafka() Option {
@@ -21,6 +24,15 @@ func Kafka() Option {
 			return
 		}
 
+		return nil
+	}
+}
+
+func Logger() Option {
+	return func(o *Options) (err error) {
+		o.Logger = &logger.LoggerService{
+			Logger: zerolog.New(zerolog.ConsoleWriter{Out: os.Stderr}).With().Timestamp().Logger(),
+		}
 		return nil
 	}
 }

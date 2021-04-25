@@ -1,6 +1,6 @@
 package service
 
-import "GOnsumer/service/kafka"
+import "GOnsumer/internal/service/kafka"
 
 const (
 	CONFIG_KAFKA_BROKERS       = "KAFKA_BROKERS"

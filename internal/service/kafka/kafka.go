@@ -23,7 +23,7 @@ func (k *KafkaService) Consume(i func([]byte, string), sigchan chan os.Signal, d
 	for {
 		select {
 		case err := <-k.PartitionConsumer.Errors():
-			fmt.Println(err)
+			panic(err)
 		case msg := <-k.PartitionConsumer.Messages():
 			i(msg.Value, msg.Topic)
 		case <-sigchan:

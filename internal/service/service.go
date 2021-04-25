@@ -1,7 +1,9 @@
 package service
 
 import (
-	"GOnsumer/service/kafka"
+	"GOnsumer/internal/service/kafka"
+	"GOnsumer/internal/service/logger"
+
 	"os"
 	"strings"
 
@@ -13,6 +15,7 @@ type (
 		Name    string
 		Version string
 		Kafka   *kafka.KafkaService
+		Logger  *logger.LoggerService
 		Cfg     *Config
 	}
 
@@ -23,6 +26,10 @@ type (
 		Sigchan chan os.Signal
 		DoneCh  chan struct{}
 	}
+)
+
+const (
+	envFilePath = "../../.env"
 )
 
 func (o *Options) connect() (s *Service, err error) {
@@ -36,12 +43,11 @@ func New(name, version string, options ...Option) (s *Service, err error) {
 	if err != nil {
 		return
 	}
-
 	return newDefaults(name, cfg, options...)
 }
 
 func loadConfigs() (c *Config, err error) {
-	err = godotenv.Load()
+	err = godotenv.Load(envFilePath)
 	if err != nil {
 		return
 	}
