@@ -3,6 +3,7 @@ package service
 import (
 	"GOnsumer/internal/service/kafka"
 	"GOnsumer/internal/service/logger"
+	"GOnsumer/internal/service/portchecker"
 	"GOnsumer/internal/service/web"
 	"os"
 
@@ -46,6 +47,13 @@ func Web(routes ...map[string]func(ctx *fiber.Ctx) error) Option {
 			App: fiber.New(),
 		}
 		o.Web.Routes = routes
+		return nil
+	}
+}
+
+func PortChecker() Option {
+	return func(o *Options) (err error) {
+		o.PortChecker = &portchecker.PortCheckerService{}
 		return nil
 	}
 }

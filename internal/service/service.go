@@ -3,6 +3,7 @@ package service
 import (
 	"GOnsumer/internal/service/kafka"
 	"GOnsumer/internal/service/logger"
+	"GOnsumer/internal/service/portchecker"
 	"GOnsumer/internal/service/web"
 
 	"os"
@@ -13,12 +14,13 @@ import (
 
 type (
 	Options struct {
-		Name    string
-		Version string
-		Kafka   *kafka.KafkaService
-		Logger  *logger.LoggerService
-		Web     *web.WebService
-		Cfg     *Config
+		Name        string
+		Version     string
+		Kafka       *kafka.KafkaService
+		Logger      *logger.LoggerService
+		PortChecker *portchecker.PortCheckerService
+		Web         *web.WebService
+		Cfg         *Config
 	}
 
 	Option func(*Options) error

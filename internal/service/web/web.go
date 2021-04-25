@@ -23,6 +23,7 @@ func (w *WebService) Run(srv interface{}) {
 
 	w.App.Use("/ws", func(ctx *fiber.Ctx) error {
 		ctx.Locals("allowed", true)
+		ctx.Status(200)
 		return ctx.Next()
 	})
 
@@ -32,6 +33,6 @@ func (w *WebService) Run(srv interface{}) {
 			w.App.Get(path, f)
 		}
 	}
-	w.App.Static("*", "../../web")
+	w.App.Static("", "../../web")
 	w.App.Listen(":1234")
 }
